@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnChanges{
   form: FormGroup = new FormGroup({
     email: new FormControl(
       '',
@@ -27,9 +27,11 @@ export class AppComponent implements OnInit{
 
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+  }
+
   submit() {
-    console.log(this.form)
-    console.log(this.form.value)
+    console.log(this.form.get('password'));
   }
 
   protected readonly toolbar = toolbar;

@@ -13,19 +13,20 @@
         placeholder="Email"
         formControlName="email"
       >
-
-      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
-           class="validation"
-      >
-        <small>
-          Email is incorrect
-        </small>
-
-        <small>
-          Password should be at least 4 characters long
-        </small>
-
-      </div>
+      @if (form.get('email')?.invalid && form.get('email')?.touched) {
+        <div class="validation">
+          @if (form.get('email')?.errors?.['required']) {
+            <small>
+              Enter email
+            </small>
+          }
+          @if (form.get('email')?.errors?.['email']) {
+            <small>
+              Enter is invalid!
+            </small>
+          }
+        </div>
+      }
     </div>
 
     <div class="form-control">
@@ -35,7 +36,25 @@
         placeholder="Пароль"
         formControlName="password"
       >
-      <div class="validation"></div>
+      @if (form.get('password')?.invalid && form.get('password')?.touched) {
+        <div class="validation">
+          @if (form.get('password')?.errors?.['minlength']) {
+            <small>
+              Password should be at least {{
+                form.get('password')
+                  ?.errors
+                  ?.['minlength']
+                  ?.['requiredLength']
+              }} characters long
+            </small>
+          }
+          @if (form.get('password')?.errors?.['required']) {
+            <small>
+              Enter is invalid!
+            </small>
+          }
+        </div>
+      }
     </div>
 
     <div class="card">
@@ -76,7 +95,6 @@
     <button
       class="btn"
       type="submit"
-      [disabled]="form.invalid"
     >Отправить
     </button>
 
