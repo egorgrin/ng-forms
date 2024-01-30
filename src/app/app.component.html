@@ -17,12 +17,12 @@
         <div class="validation">
           @if (form.get('email')?.errors?.['required']) {
             <small>
-              Enter email
+              Field cannot be empty!
             </small>
           }
           @if (form.get('email')?.errors?.['email']) {
             <small>
-              Enter is invalid!
+              Email is invalid!
             </small>
           }
         </div>
@@ -38,6 +38,11 @@
       >
       @if (form.get('password')?.invalid && form.get('password')?.touched) {
         <div class="validation">
+          @if (form.get('password')?.errors?.['required']) {
+            <small>
+              Field cannot be empty!
+            </small>
+          }
           @if (form.get('password')?.errors?.['minlength']) {
             <small>
               Password should be at least {{
@@ -48,22 +53,17 @@
               }} characters long
             </small>
           }
-          @if (form.get('password')?.errors?.['required']) {
-            <small>
-              Enter is invalid!
-            </small>
-          }
         </div>
       }
     </div>
 
-    <div class="card">
+    <div class="card" formGroupName="address">
       <h2>Адрес</h2>
 
       <div class="form-control">
         <label>Страна</label>
 
-        <select>
+        <select formControlName="country">
           <option value="ru">Россия</option>
           <option value="ua">Украина</option>
           <option value="by">Беларусь</option>
@@ -71,20 +71,29 @@
       </div>
 
       <div class="form-control">
-        <input type="text">
+        <input
+          type="text"
+          formControlName="city"
+          placeholder="Город"
+        >
       </div>
 
-      <button class="btn"
-              type="button"
-      >Выбрать столицу
+      <button
+        class="btn"
+        type="button"
+        (click)="setCapital()"
+      >
+        Выбрать столицу
       </button>
+
     </div>
 
     <div class="card">
       <h2>Ваши навыки</h2>
       <button class="btn"
               type="button"
-      >Добавить умение
+      >
+        Добавить умение
       </button>
       <div class="form-control">
         <label></label>
@@ -95,7 +104,8 @@
     <button
       class="btn"
       type="submit"
-    >Отправить
+    >
+      Отправить
     </button>
 
   </form>
